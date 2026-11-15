@@ -5,9 +5,19 @@
 <div class="grid">
   {% for film in films %}
   <div class="card">
+   {% if film.poster %}
     <img src="{{ film.poster.url }}" alt="{{ film.title }}">
+{% else %}
+    <div class="poster-placeholder">
+        No Poster
+    </div>
+{% endif %}
     <div class="card-body">
-      <h3>{{ film.title }}</h3>
+      <h3>
+    <a href="{% url 'film_detail' film.slug %}">
+        {{ film.title }}
+    </a>
+</h3>
       <span class="muted">{{ film.year }}</span>{% if film.score is not None %} <span class="score">· ★ {{ film.score|floatformat:2 }}</span>{% endif %}
       {% if film.has_review %}<a class="btn" href="{% url 'film_detail' film.slug %}">مطالعه‌ی نقد</a>{% endif %}
     </div>

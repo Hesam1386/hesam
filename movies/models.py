@@ -28,6 +28,10 @@ class Film(models.Model):
     )
     genres = models.ManyToManyField(Genre, verbose_name="ژانرها", blank=True, related_name="films")
     review = models.TextField("نقد", blank=True, help_text="اختیاریه")
+    synopsis = models.TextField(
+    "خلاصه داستان",
+    max_length=500,
+    blank=True)
     watched_on = models.DateField("تاریخ تماشا", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     reviewed_at = models.DateTimeField(null=True, blank=True, editable=False)
@@ -68,3 +72,5 @@ class WatchItem(models.Model):
 
     def __str__(self):
         return self.title
+
+

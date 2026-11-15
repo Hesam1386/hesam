@@ -9,7 +9,13 @@
 
 {% block content %}
 <div class="film">
-  <img src="{{ film.poster.url }}" alt="{{ film.title }}">
+  {% if film.poster %}
+    <img src="{{ film.poster.url }}" alt="{{ film.title }}">
+{% else %}
+    <div class="poster-placeholder">
+        No Poster
+    </div>
+{% endif %}
   <div class="film-info">
     <h1>{{ film.title }}</h1>
     <p class="muted">{{ film.year }}{% if film.director %} · {{ film.director }}{% endif %}</p>
@@ -17,6 +23,11 @@
     <p>نمره‌ی من: <span class="score">{{ film.score|floatformat:2 }}</span> از ۱۰۰ · <span class="score" dir="ltr">#{{ film.rank }}</span></p>
     {% endif %}
     <div class="chips">{% for g in film.genres.all %}<a class="chip" href="{% url 'genre' g.slug %}">{{ g.name }}</a>{% endfor %}</div>
+    {% if film.synopsis %}
+<div class="synopsis">
+  <p>{{ film.synopsis|linebreaks }}</p>
+</div>
+{% endif %}
   </div>
 </div>
 
