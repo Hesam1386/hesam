@@ -3,10 +3,14 @@
   <tr><th>#</th><th></th><th>فیلم</th><th>نمره از ۱۰۰</th></tr>
   {% for film in films %}
   <tr>
-    <td>{{ forloop.counter }}</td>
+    <td>{% if film.table_rank %}{{ film.table_rank }}{% else %}—{% endif %}</td>
     <td><img src="{{ film.poster.url }}" alt="{{ film.title }}"></td>
     <td><a href="{% url 'film_detail' film.slug %}">{{ film.title }}</a></td>
-    <td class="score">{{ film.score }}</td>
+    {% if film.score is not None %}
+    <td class="score">{{ film.score|floatformat:2 }}</td>
+    {% else %}
+    <td class="muted">—</td>
+    {% endif %}
   </tr>
   {% endfor %}
 </table>

@@ -1,0 +1,17 @@
+{% extends "film/base.html" %}
+{% block title %}فیلم‌های دیده‌نشده | Hesam Review{% endblock %}
+{% block content %}
+<h2 class="section-title">فیلم‌های دیده‌نشده</h2>
+<div class="grid">
+  {% for item in items %}
+  <div class="card">
+    {% if item.poster %}<img src="{{ item.poster.url }}" alt="{{ item.title }}">{% else %}<div class="no-poster">🎬</div>{% endif %}
+    <div class="card-body">
+      <h3>{{ item.title }}</h3>
+      {% if item.year %}<span class="muted">{{ item.year }}</span>{% endif %}
+      {% if item.note %}<p>{{ item.note }}</p>{% endif %}
+    </div>
+  </div>
+  {% empty %}<p class="muted">لیست خالیه.</p>{% endfor %}
+</div>
+{% endblock %}

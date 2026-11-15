@@ -1,0 +1,17 @@
+{% extends "film/base.html" %}
+{% block title %}نقدها | Hesam Review{% endblock %}
+{% block content %}
+<h2 class="section-title">همه‌ی نقدها</h2>
+<div class="grid">
+  {% for film in films %}
+  <div class="card">
+    <img src="{{ film.poster.url }}" alt="{{ film.title }}">
+    <div class="card-body">
+      <h3>{{ film.title }}</h3>
+      {% if film.score is not None %}<span class="score">★ {{ film.score|floatformat:2 }}</span> <span class="muted">/ ۱۰۰</span>{% endif %}
+      <a class="btn" href="{% url 'film_detail' film.slug %}">مطالعه‌ی نقد</a>
+    </div>
+  </div>
+  {% empty %}<p class="muted">هنوز نقدی ثبت نشده.</p>{% endfor %}
+</div>
+{% endblock %}

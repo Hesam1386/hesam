@@ -1,0 +1,17 @@
+{% extends "film/base.html" %}
+{% block title %}فیلم‌های دیده‌شده | Hesam Review{% endblock %}
+{% block content %}
+<h2 class="section-title">فیلم‌های دیده‌شده</h2>
+<div class="grid">
+  {% for film in films %}
+  <div class="card">
+    <img src="{{ film.poster.url }}" alt="{{ film.title }}">
+    <div class="card-body">
+      <h3>{{ film.title }}</h3>
+      <span class="muted">{{ film.year }}</span>{% if film.score is not None %} <span class="score">· ★ {{ film.score|floatformat:2 }}</span>{% endif %}
+      {% if film.has_review %}<a class="btn" href="{% url 'film_detail' film.slug %}">مطالعه‌ی نقد</a>{% endif %}
+    </div>
+  </div>
+  {% empty %}<p class="muted">هنوز فیلمی ثبت نشده.</p>{% endfor %}
+</div>
+{% endblock %}

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -17,11 +18,12 @@
     body { font-family: Tahoma, sans-serif; background: var(--bg); color: var(--text); margin: 0; }
     a { color: inherit; text-decoration: none; }
     .container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+    .muted { color: var(--muted); }
+    .score { color: var(--accent); font-weight: bold; }
 
     header { background: #23262a; border-bottom: 1px solid var(--border); }
     .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 16px; }
-    .logo { font-size: 22px; font-weight: bold; }
-    .logo small { display: block; font-size: 12px; color: var(--muted); font-weight: normal; }
+    .logo img { height: 44px; display: block; }
     .search input { width: 260px; max-width: 100%; padding: 10px 14px; border-radius: 10px;
       border: 1px solid var(--border); background: var(--surface); color: var(--text); font-family: inherit; }
 
@@ -31,29 +33,44 @@
       background: linear-gradient(to left, rgba(35,38,42,.92), rgba(35,38,42,.35)); }
     .hero-text { position: relative; max-width: 520px; padding: 32px 16px; }
     .hero h1 { margin: 0 0 8px; font-size: 38px; }
-    .hero p { color: #d6d8dc; line-height: 1.9; }
     .badge { display: inline-block; background: rgba(0,0,0,.4); padding: 6px 12px; border-radius: 8px; margin: 8px 0; }
     .btn { display: inline-block; background: var(--accent); color: #1c1c1c; padding: 10px 18px;
       border-radius: 10px; font-weight: bold; }
 
     .section-title { font-size: 20px; margin: 32px 0 16px; border-bottom: 2px solid var(--accent);
       display: inline-block; padding-bottom: 6px; }
-    .layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 24px; align-items: start; }
-    @media (max-width: 760px) { .layout { grid-template-columns: 1fr; } }
+
+    .page { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 24px; align-items: start; margin-top: 24px; }
+    .sidebar { display: flex; flex-direction: column; gap: 12px; }
+    .side-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; }
+    .side-box summary { cursor: pointer; font-weight: bold; list-style: none; }
+    .side-box summary::-webkit-details-marker { display: none; }
+    .side-box summary::after { content: "▾"; float: left; color: var(--muted); }
+    .side-box[open] summary::after { content: "▴"; }
+    .side-box .chips { margin-top: 12px; }
+    .side-links a { display: block; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .side-links a:last-child { border-bottom: none; }
+    .side-links a:hover { color: var(--accent); }
+    @media (max-width: 760px) { .page { grid-template-columns: 1fr; } .sidebar { order: 2; } }
 
     .box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
     .chips { display: flex; flex-wrap: wrap; gap: 8px; }
     .chip { background: var(--bg); border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px; font-size: 14px; }
     .chip:hover { border-color: var(--accent); }
 
+    .layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 24px; align-items: start; }
+    @media (max-width: 760px) { .layout { grid-template-columns: 1fr; } }
+
     .scroll-row { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 12px; scroll-snap-type: x proximity; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
     .card { flex: 0 0 200px; scroll-snap-align: start; background: var(--surface);
       border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
     .card img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; display: block; }
+    .no-poster { aspect-ratio: 2 / 3; display: flex; align-items: center; justify-content: center;
+      font-size: 48px; background: var(--bg); }
     .card-body { padding: 12px; }
-    .card-body h3 { margin: 0 0 6px; font-size: 16px; }
-    .score { color: var(--accent); font-weight: bold; }
-    .card-body p { color: var(--muted); font-size: 13px; margin: 8px 0 12px; min-height: 36px; }
+    .card-body h3 { margin: 0 0 10px; font-size: 16px; }
+    .card-body p { color: var(--muted); font-size: 13px; margin: 8px 0 12px; }
     .card .btn { display: block; text-align: center; padding: 8px; font-size: 14px; margin-top: 16px; }
 
     table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 12px; overflow: hidden; }
@@ -62,31 +79,50 @@
     td img { width: 44px; height: 64px; object-fit: cover; border-radius: 4px; display: block; }
 
     .banner { height: 300px; background-size: cover; background-position: center; position: relative; }
-.banner::after { content: ""; position: absolute; inset: 0;
-  background: linear-gradient(to top, var(--bg), transparent 60%); }
-.film { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; margin-top: 32px; }
-.film img { width: 260px; max-width: 100%; height: auto; border-radius: 10px; }
-.film-info { flex: 1; min-width: 260px; }
-.review { margin: 32px 0; background: var(--surface); border: 1px solid var(--border);
-  border-radius: 12px; padding: 24px; line-height: 2; font-size: 16px; }
-    .muted { color: var(--muted); }
+    .banner::after { content: ""; position: absolute; inset: 0;
+      background: linear-gradient(to top, var(--bg), transparent 60%); }
+    .film { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+    .film img { width: 260px; max-width: 100%; height: auto; border-radius: 10px; }
+    .film-info { flex: 1; min-width: 260px; }
+    .review { margin: 32px 0; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px; line-height: 2; font-size: 16px; }
+
     footer { margin: 48px 0 24px; text-align: center; color: var(--muted); font-size: 13px; }
     footer .contact { margin-top: 6px; }
-footer .contact a { color: var(--accent); }
+    footer .contact a { color: var(--accent); }
   </style>
 </head>
 <body>
   <header>
     <div class="container header-inner">
-      <a href="{% url 'home' %}" class="logo">Hesam Review<small>نقد و بررسی فیلم</small></a>
+      <a href="{% url 'home' %}" class="logo"><img src="{% static 'film/logo.png' %}" alt="Hesam Review"></a>
       <form class="search" method="get" action="{% url 'home' %}">
         <input type="search" name="q" value="{{ q|default:'' }}" placeholder="جستجوی فیلم‌ها...">
       </form>
     </div>
   </header>
+
   {% block hero %}{% endblock %}
-  <main class="container">{% block content %}{% endblock %}</main>
-  <footer>© Hesam
+
+  <div class="container page">
+    <aside class="sidebar">
+      <nav class="side-box side-links">
+        <a href="{% url 'reviews' %}">نقدها</a>
+        <a href="{% url 'watched' %}">فیلم‌های دیده‌شده</a>
+        <a href="{% url 'unwatched' %}">فیلم‌های دیده‌نشده</a>
+      </nav>
+      <details class="side-box" open>
+        <summary>ژانرها</summary>
+        <div class="chips">
+          {% for g in sidebar_genres %}<a class="chip" href="{% url 'genre' g.slug %}">{{ g.name }}</a>{% empty %}<span class="muted">هنوز ژانری نیست.</span>{% endfor %}
+        </div>
+      </details>
+    </aside>
+    <main>{% block content %}{% endblock %}</main>
+  </div>
+
+  <footer>
+    <div>© Hesam Review</div>
     <div class="contact">تلگرام: <a href="https://t.me/mercedesbosses" target="_blank" rel="noopener" dir="ltr">@mercedesbosses</a></div>
   </footer>
 </body>
