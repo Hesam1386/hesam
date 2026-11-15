@@ -1,0 +1,15 @@
+{% if films %}
+<table>
+  <tr><th>#</th><th></th><th>فیلم</th><th>نمره از ۱۰۰</th></tr>
+  {% for film in films %}
+  <tr>
+    <td>{{ forloop.counter }}</td>
+    <td><img src="{{ film.poster.url }}" alt="{{ film.title }}"></td>
+    <td><a href="{% url 'film_detail' film.slug %}">{{ film.title }}</a></td>
+    <td class="score">{{ film.score }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p class="muted">فیلمی پیدا نشد.</p>
+{% endif %}

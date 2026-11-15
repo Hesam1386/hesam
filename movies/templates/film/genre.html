@@ -1,0 +1,7 @@
+{% extends "film/base.html" %}
+{% block title %}{{ genre.name }} | Hesam Review{% endblock %}
+{% block content %}
+<h2 class="section-title">فیلم‌های ژانر {{ genre.name }}</h2>
+{% include "film/_table.html" %}
+<p><a href="{% url 'home' %}">← بازگشت به صفحه‌ی اصلی</a></p>
+{% endblock %}

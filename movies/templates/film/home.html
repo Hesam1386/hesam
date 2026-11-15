@@ -1,0 +1,49 @@
+{% extends "film/base.html" %}
+
+{% block hero %}
+{% if hero %}
+<section class="hero" style="background-image: url('{% if hero.backdrop %}{{ hero.backdrop.url }}{% else %}{{ hero.poster.url }}{% endif %}');">
+  <div class="container">
+    <div class="hero-text">
+      <h1>{{ hero.title }}</h1>
+      <div class="badge">نمره: <span class="score">{{ hero.score }}</span> / ۱۰۰</div><br>
+      <a class="btn" href="{% url 'film_detail' hero.slug %}">مشاهده‌ی نقد کامل</a>
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% if q %}
+  <h2 class="section-title">نتایج جستجو برای «{{ q }}»</h2>
+  {% include "film/_table.html" %}
+{% else %}
+  <div class="layout">
+    <aside>
+      <h2 class="section-title">ژانرها</h2>
+      <div class="box chips">
+        {% for g in genres %}<a class="chip" href="{% url 'genre' g.slug %}">{{ g.name }}</a>{% empty %}<span class="muted">هنوز ژانری اضافه نشده.</span>{% endfor %}
+      </div>
+    </aside>
+    <section>
+      <h2 class="section-title">جدیدترین نقدها</h2>
+      <div class="scroll-row">
+        {% for film in latest %}
+        <div class="card">
+          <img src="{{ film.poster.url }}" alt="{{ film.title }}">
+          <div class="card-body">
+            <h3>{{ film.title }}</h3>
+            <span class="score">★ {{ film.score }}</span> <span class="muted">/ ۱۰۰</span>
+            <a class="btn" href="{% url 'film_detail' film.slug %}">مطالعه‌ی نقد</a>
+          </div>
+        </div>
+        {% empty %}<p class="muted">هنوز نقدی ثبت نشده.</p>{% endfor %}
+      </div>
+    </section>
+  </div>
+
+  <h2 class="section-title">رتبه‌بندی فیلم‌ها</h2>
+  {% include "film/_table.html" %}
+{% endif %}
+{% endblock %}

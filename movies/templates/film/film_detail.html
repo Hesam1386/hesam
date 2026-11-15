@@ -1,0 +1,26 @@
+{% extends "film/base.html" %}
+{% block title %}{{ film.title }} | Hesam Review{% endblock %}
+
+{% block hero %}
+{% if film.backdrop %}
+<div class="banner" style="background-image: url('{{ film.backdrop.url }}');"></div>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="film">
+  <img src="{{ film.poster.url }}" alt="{{ film.title }}">
+  <div class="film-info">
+    <h1>{{ film.title }}</h1>
+    <p class="muted">{{ film.year }}{% if film.director %} · {{ film.director }}{% endif %}</p>
+    <p>نمره‌ی من: <span class="score">{{ film.score }}</span> از ۱۰۰</p>
+    <div class="chips">{% for g in film.genres.all %}<a class="chip" href="{% url 'genre' g.slug %}">{{ g.name }}</a>{% endfor %}</div>
+  </div>
+</div>
+
+<article class="review">
+  {{ film.review|linebreaks }}
+</article>
+
+<p><a href="{% url 'home' %}">← بازگشت</a></p>
+{% endblock %}
